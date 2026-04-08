@@ -3,65 +3,85 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FastPass Calculator — TradingBossBot</title>
+<title>FastPass Calculator — Trading Boss</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background: #0d0d0f;
-    color: #e8e6e1;
+    background: #080a08;
+    color: #e8f0e8;
     min-height: 100vh;
-    padding: 2rem 1rem;
+    padding: 2rem 1rem 3rem;
   }
 
   .container { max-width: 640px; margin: 0 auto; }
 
-  .badge {
-    display: inline-block;
-    background: #1a1a2e;
-    border: 1px solid #2a2a4a;
-    color: #7c71e8;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: .08em;
-    text-transform: uppercase;
-    padding: 4px 10px;
-    border-radius: 4px;
-    margin-bottom: 12px;
+  /* Header */
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #0f2a10;
   }
 
-  h1 { font-size: 24px; font-weight: 600; color: #f0ede8; margin-bottom: 6px; }
-  .sub { font-size: 13px; color: #6b6860; margin-bottom: 2rem; }
+  .logo-mark {
+    width: 44px;
+    height: 44px;
+    background: #00e534;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: 900;
+    color: #080a08;
+    flex-shrink: 0;
+    letter-spacing: -1px;
+  }
+
+  .header-text {}
+  .header-brand { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #00e534; margin-bottom: 2px; }
+  .header-title { font-size: 22px; font-weight: 700; color: #ffffff; }
 
   .section-label {
     font-size: 10px;
     font-weight: 700;
     letter-spacing: .1em;
     text-transform: uppercase;
-    color: #4a4844;
+    color: #2a4a2a;
     margin-bottom: 10px;
   }
 
+  /* Firm tabs */
   .firm-tabs { display: flex; gap: 8px; margin-bottom: 1rem; }
 
   .firm-tab {
     flex: 1;
     padding: 10px;
-    background: #131316;
-    border: 1px solid #1e1e24;
+    background: #0d110d;
+    border: 1px solid #152015;
     border-radius: 8px;
     cursor: pointer;
     text-align: center;
     font-size: 14px;
-    font-weight: 600;
-    color: #6b6860;
+    font-weight: 700;
+    color: #3a5a3a;
     transition: all .15s;
+    letter-spacing: .02em;
   }
 
-  .firm-tab:hover { border-color: #2e2e3a; color: #a8a5a0; }
-  .firm-tab.active { border-color: #5b52d0; background: #13121f; color: #a09aee; }
+  .firm-tab:hover { border-color: #1e3a1e; color: #6a8a6a; }
 
+  .firm-tab.active {
+    border-color: #00e534;
+    background: #061a08;
+    color: #00e534;
+  }
+
+  /* Size buttons */
   .size-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -72,8 +92,8 @@
   }
 
   .size-btn {
-    background: #131316;
-    border: 1px solid #1e1e24;
+    background: #0d110d;
+    border: 1px solid #152015;
     border-radius: 8px;
     padding: 12px 8px;
     cursor: pointer;
@@ -81,98 +101,124 @@
     transition: all .15s;
   }
 
-  .size-btn:hover { border-color: #2e2e3a; }
-  .size-btn.active { border-color: #5b52d0; background: #13121f; }
+  .size-btn:hover { border-color: #1e3a1e; }
 
-  .size-name { font-size: 15px; font-weight: 700; color: #e0ddd8; }
-  .size-detail { font-size: 11px; color: #4a4844; margin-top: 3px; }
+  .size-btn.active {
+    border-color: #00e534;
+    background: #061a08;
+  }
 
+  .size-name { font-size: 16px; font-weight: 800; color: #ffffff; }
+  .size-detail { font-size: 11px; color: #3a5a3a; margin-top: 3px; }
+  .size-btn.active .size-detail { color: #00a828; }
+
+  /* Form */
   .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 1.75rem; }
 
   .form-group label {
     display: block;
-    font-size: 11px;
-    color: #5a5854;
+    font-size: 10px;
+    color: #2a4a2a;
     margin-bottom: 6px;
     text-transform: uppercase;
-    letter-spacing: .05em;
-    font-weight: 600;
+    letter-spacing: .08em;
+    font-weight: 700;
   }
 
   .form-group input {
     width: 100%;
-    background: #131316;
-    border: 1px solid #1e1e24;
+    background: #0d110d;
+    border: 1px solid #152015;
     border-radius: 6px;
     padding: 9px 11px;
     font-size: 15px;
-    font-weight: 500;
-    color: #e8e6e1;
+    font-weight: 600;
+    color: #e8f0e8;
     outline: none;
     transition: border-color .15s;
   }
 
-  .form-group input:focus { border-color: #5b52d0; }
+  .form-group input:focus { border-color: #00e534; }
 
-  .divider { border: none; border-top: 1px solid #1a1a1e; margin: 1.5rem 0; }
+  .divider { border: none; border-top: 1px solid #0f1f0f; margin: 1.5rem 0; }
 
+  /* Results */
   .results-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 1.25rem; }
 
-  .metric { background: #131316; border: 1px solid #1e1e24; border-radius: 8px; padding: 14px; }
-  .metric-label { font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #4a4844; margin-bottom: 6px; }
-  .metric-value { font-size: 26px; font-weight: 600; color: #f0ede8; line-height: 1; }
-  .metric-unit  { font-size: 11px; color: #4a4844; margin-top: 4px; }
+  .metric {
+    background: #0d110d;
+    border: 1px solid #152015;
+    border-radius: 8px;
+    padding: 14px;
+  }
 
+  .metric-label { font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #2a4a2a; margin-bottom: 6px; }
+  .metric-value { font-size: 28px; font-weight: 800; color: #ffffff; line-height: 1; }
+  .metric-unit  { font-size: 11px; color: #2a4a2a; margin-top: 4px; }
+
+  /* Banner */
   .banner { border-radius: 8px; padding: 13px 16px; margin-bottom: 1.25rem; border: 1px solid; }
-  .banner.ok   { background: #0d1f12; border-color: #1a3d22; color: #4caf6f; }
-  .banner.warn { background: #1f1a0d; border-color: #3d3022; color: #d4963a; }
-  .banner.fail { background: #1f0d0d; border-color: #3d1a1a; color: #d44a4a; }
-  .banner-title { font-size: 14px; font-weight: 600; }
+  .banner.ok   { background: #061a08; border-color: #00e534; color: #00e534; }
+  .banner.warn { background: #1a1200; border-color: #e5a800; color: #e5a800; }
+  .banner.fail { background: #1a0600; border-color: #e53400; color: #e53400; }
+  .banner-title { font-size: 14px; font-weight: 700; }
   .banner-sub   { font-size: 12px; margin-top: 4px; opacity: .8; }
 
-  .trade-box { background: #131316; border: 1px solid #1e1e24; border-radius: 8px; padding: 14px; margin-bottom: 1rem; }
+  /* Trade box */
+  .trade-box {
+    background: #0d110d;
+    border: 1px solid #152015;
+    border-radius: 8px;
+    padding: 14px;
+    margin-bottom: 1rem;
+  }
 
   .trade-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 6px 0;
-    border-bottom: 1px solid #1a1a1e;
+    padding: 7px 0;
+    border-bottom: 1px solid #0f1f0f;
     font-size: 13px;
   }
 
   .trade-row:last-child { border-bottom: none; }
-  .trade-row span:first-child { color: #5a5854; }
-  .trade-row span:last-child  { font-weight: 600; color: #e8e6e1; }
-  .trade-row.total span:last-child { color: #4caf6f; font-size: 15px; }
+  .trade-row span:first-child { color: #3a5a3a; }
+  .trade-row span:last-child  { font-weight: 700; color: #e8f0e8; }
+  .trade-row.total span:last-child { color: #00e534; font-size: 16px; }
 
-  .note { font-size: 11px; color: #3a3834; line-height: 1.7; }
+  .note { font-size: 11px; color: #1e3a1e; line-height: 1.7; }
 
+  /* Footer */
   .footer {
     margin-top: 2.5rem;
     padding-top: 1.5rem;
-    border-top: 1px solid #1a1a1e;
+    border-top: 1px solid #0f2a10;
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
 
-  .footer-brand { font-size: 12px; font-weight: 600; color: #3a3834; letter-spacing: .05em; text-transform: uppercase; }
-  .footer-link  { font-size: 12px; color: #5b52d0; text-decoration: none; }
-  .footer-link:hover { color: #7c71e8; }
+  .footer-brand { font-size: 11px; font-weight: 700; color: #1e3a1e; letter-spacing: .1em; text-transform: uppercase; }
+  .footer-link  { font-size: 12px; color: #00a828; text-decoration: none; font-weight: 600; }
+  .footer-link:hover { color: #00e534; }
 
   @media (max-width: 480px) {
-    .form-grid  { grid-template-columns: 1fr; }
-    .size-grid  { grid-template-columns: repeat(2, 1fr); }
+    .form-grid { grid-template-columns: 1fr; }
+    .size-grid { grid-template-columns: repeat(2, 1fr); }
   }
 </style>
 </head>
 <body>
 <div class="container">
 
-  <div class="badge">FastPass strategy</div>
-  <h1>Prop Firm Pass Calculator</h1>
-  <p class="sub">NQ futures &middot; $5.00 per tick &middot; one trade to pass or fail</p>
+  <div class="header">
+    <div class="logo-mark">TB</div>
+    <div class="header-text">
+      <div class="header-brand">Trading Boss</div>
+      <div class="header-title">FastPass Calculator</div>
+    </div>
+  </div>
 
   <p class="section-label">Select firm</p>
   <div class="firm-tabs">
@@ -235,7 +281,7 @@ const firms = {
 function renderSizeButtons(firm) {
   const grid = document.getElementById('size-grid');
   if (!firms[firm]) {
-    grid.innerHTML = '<p style="font-size:13px;color:#5a5854;grid-column:1/-1;padding:4px 0;">Set parameters manually below.</p>';
+    grid.innerHTML = '<p style="font-size:13px;color:#3a5a3a;grid-column:1/-1;padding:4px 0;">Set parameters manually below.</p>';
     return;
   }
   grid.innerHTML = firms[firm].map((a, i) => `
@@ -282,11 +328,11 @@ function calc() {
   if (ticksNeeded <= 120) {
     cls   = 'ok';
     title = ticksNeeded <= 50 ? 'Quick pass — very achievable' : 'Standard FastPass setup';
-    sub   = `${ticksNeeded} ticks (${pointsNeeded} pts) &mdash; $${Math.round(grossPerTick).toLocaleString()} gross per tick move`;
+    sub   = `${ticksNeeded} ticks (${pointsNeeded} pts) — $${Math.round(grossPerTick).toLocaleString()} gross per tick move`;
   } else if (ticksNeeded <= 200) {
     cls   = 'warn';
     title = 'Riskier setup — requires more than 30 points';
-    sub   = `${ticksNeeded} ticks (${pointsNeeded} pts) &mdash; consider more contracts or splitting into more days`;
+    sub   = `${ticksNeeded} ticks (${pointsNeeded} pts) — consider more contracts or splitting into more days`;
   } else {
     cls   = 'fail';
     title = 'Not practical in one trade — add contracts or days';
@@ -324,11 +370,11 @@ function calc() {
       <div class="trade-row"><span>Contracts</span><span>${contracts} NQ mini</span></div>
       <div class="trade-row"><span>Tick target</span><span>${ticksNeeded} ticks (${pointsNeeded} pts)</span></div>
       <div class="trade-row"><span>Gross move</span><span>$${(ticksNeeded * grossPerTick).toLocaleString()}</span></div>
-      <div class="trade-row"><span>Commission (${contracts} &times; $${commPerCont.toFixed(2)})</span><span>&minus;$${commPerTrade.toFixed(2)}</span></div>
+      <div class="trade-row"><span>Commission (${contracts} × $${commPerCont.toFixed(2)})</span><span>−$${commPerTrade.toFixed(2)}</span></div>
       <div class="trade-row"><span>Net per day</span><span>$${Math.round(actualNet).toLocaleString()}</span></div>
       ${days > 1 ? `<div class="trade-row total"><span>Total over ${days} days</span><span>$${Math.round(totalProfit).toLocaleString()}</span></div>` : ''}
     </div>
-    <p class="note">One trade per day. Passes on profit hit, fails on loss. NQ tick = $5.00 &middot; 1 point = 4 ticks = $20 per contract.</p>
+    <p class="note">One trade per day. Passes on profit hit, fails on loss. NQ tick = $5.00 · 1 point = 4 ticks = $20 per contract.</p>
   `;
 }
 
