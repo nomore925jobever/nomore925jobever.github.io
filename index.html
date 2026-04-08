@@ -319,7 +319,7 @@ function calc() {
   const commPerTrade = commPerCont * contracts;
   const grossNeeded  = dailyTarget + commPerTrade;
   const grossPerTick = contracts * NQ_TICK;
-  const ticksNeeded  = Math.ceil(grossNeeded / grossPerTick);
+  const ticksNeeded  = Math.ceil(grossNeeded / grossPerTick) + 4;
   const actualNet    = (ticksNeeded * grossPerTick) - commPerTrade;
   const totalProfit  = actualNet * days;
   const pointsNeeded = (ticksNeeded * 0.25).toFixed(2);
